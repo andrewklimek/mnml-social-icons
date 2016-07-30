@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Social Monger
-Description: crisp and light (official) social media icons (embeds SVG code for fast loading and vector rendering)
+Description: quickly add SVGs of official social media logos with this WordPress shortcode.  (SVGs are vector for insane crispness and inline for insane speed.)
 Version:     0.1
 Author:      Andrew J Klimek
 Author URI:  https://readycat.net
