@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Social Monger
-Description: quickly add SVGs of official social media logos with this WordPress shortcode.  (SVGs are vector for insane crispness and inline for insane speed.)
+Description: crisp and light (official) social media icons (embeds SVG code for fast loading and vector rendering)
 Version:     0.1
 Author:      Andrew J Klimek
 Author URI:  https://readycat.net
@@ -29,7 +29,7 @@ function socialmonger( $a, $c ) {
 	$idno = 1 + wp_cache_get( 'socialmonger_id' );
 	wp_cache_set('socialmonger_id', $idno );
 	
-	$out = "<div id='socialmonger-{$idno}' class='socialmonger'>";
+	$out = "<p id='socialmonger-{$idno}' class='socialmonger'>";
 	
 	// initial style, only print once
 	if ( $idno === 1 ) {
@@ -37,13 +37,13 @@ function socialmonger( $a, $c ) {
 		$size = !empty( $a['size'] ) ? $a['size'] : "2rem";
 		$color = !empty( $a['color'] ) ? $a['color'] : "#777";
 		$outline = !empty( $a['outline'] ) ? $a['outline'] : "0";
-		$margin = !empty( $a['margin'] ) ? $a['margin'] : "0 1ex";
+		$padding = !empty( $a['padding'] ) ? $a['padding'] : "0 1ex";
 		
 		$out .= "
 		<style>
 		.socialmonger {display: flex;justify-content: center;line-height: 1;}
 		.socialmonger a {text-decoration: none;}
-		.socialmonger svg {width: {$size};height: {$size};margin: {$margin};fill: {$color};stroke: {$color};stroke-width: {$outline};}
+		.socialmonger svg {width: {$size};height: {$size};padding: {$padding};fill: {$color};stroke: {$color};stroke-width: {$outline};box-sizing: content-box;}
 		</style>";
 		
 	} elseif ( $a ) {// subsequent styles, for second instances on same page, only run if any attributes exist
@@ -55,8 +55,8 @@ function socialmonger( $a, $c ) {
 			$out .= "fill: {$a['color']};stroke: {$a['color']};";
 		if ( !empty( $a['outline'] ) )
 			$out .= "stroke-width: {$a['outline']};";
-		if ( !empty( $a['margin'] ) )
-			$out .= "margin: {$a['margin']};";
+		if ( !empty( $a['padding'] ) )
+			$out .= "padding: {$a['padding']};";
 		$out .= "}</style>";
 	
 	}
@@ -108,7 +108,7 @@ function socialmonger( $a, $c ) {
 		
 	}// foreach link
 	
-	$out .= "</div>";
+	$out .= "</p>";
 
 	return $out;
 }
