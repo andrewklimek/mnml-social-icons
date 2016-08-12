@@ -3,7 +3,7 @@
 Plugin Name: Social Monger
 Plugin URI:  https://github.com/andrewklimek/socialmonger/
 Description: crisp and light (official) social media icons (embeds SVG code for fast loading and vector rendering)
-Version:     1.1.0
+Version:     1.2.0
 Author:      Andrew J Klimek
 Author URI:  https://readycat.net
 License:     GPL2
@@ -94,13 +94,13 @@ function socialmonger( $a, $c ) {
 	
 	}
 	
-	$links = array_filter( explode( "\n", strip_tags( $c ) ) );// clean and parse content into an array of links
+	$lines = array_filter( explode( "\n", $c ) );
 	
-	foreach ( $links as $link ) {
+	foreach ( $lines as $line ) {
 		
-		if ( false === strpos( $link, '//' ) ) {// check for scheme and add if missing
-			$link = '//' . $link;
-		}
+			// check for scheme and add if missing. preserve original $line in case it's a custom html (else block at the end)
+			$link = ( false === strpos( $line, '//' ) ) ? '//' . $line : $line;
+
 		
 		if ( false !== stripos( $link, 'twitter' ) ) {
 			$out .= "
@@ -151,6 +151,10 @@ function socialmonger( $a, $c ) {
 						<svg title='linkedin' xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 100 100'><path d='M79.5 16.5h-58c-2.8 0-5 2.2-5 5v58c0 2.8 2.2 5 5 5h58c2.7 0 5-2.2 5-5v-58c0-2.8-2.3-5-5-5zm-42.8 58h-10V42h10v32.5zm-5-37c-3.3 0-6-2.6-6-5.8 0-3.2 2.7-5.8 6-5.8 3.2 0 5.8 2.5 5.8 5.7s-2.6 6-6 6zm42.8 37h-10V58.7c0-3.8-.2-8.6-5.4-8.6-5 0-6 4.2-6 8.4v16H43V42h9.7v4.4c1.5-2.5 4.7-5.2 9.6-5.2 10.3 0 12.2 6.7 12.2 15.4v18z'/></svg>
 					</a>
 				</span>";
+		} else {
+			$out .= $line;// this is for custom links entered directly as html.
+			poo($line);
+			poo($out);
 		}
 		
 	}// foreach link
