@@ -3,7 +3,7 @@
 Plugin Name: Social Monger
 Plugin URI:  https://github.com/andrewklimek/socialmonger/
 Description: crisp and light (official) social media icons (embeds SVG code for fast loading and vector rendering)
-Version:     1.3.0
+Version:     1.3.1
 Author:      Andrew J Klimek
 Author URI:  https://readycat.net
 License:     GPL2
