@@ -1,7 +1,7 @@
 <?php
 /*
-Plugin Name: Social Monger
-Plugin URI:  https://github.com/andrewklimek/socialmonger/
+Plugin Name: Minimalist Social Icons
+Plugin URI:  https://github.com/andrewklimek/mnmlsocial/
 Description: crisp and light (official) social media icons (embeds SVG code for fast loading and vector rendering)
 Version:     1.3.1
 Author:      Andrew J Klimek
@@ -9,24 +9,24 @@ Author URI:  https://readycat.net
 License:     GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Social Monger is free software: you can redistribute it and/or modify 
+Minimalist Social Icons is free software: you can redistribute it and/or modify 
 it under the terms of the GNU General Public License as published by the Free 
 Software Foundation, either version 2 of the License, or any later version.
 
-Social Monger is distributed in the hope that it will be useful, but without 
+Minimalist Social Icons is distributed in the hope that it will be useful, but without 
 any warranty; without even the implied warranty of merchantability or fitness for a 
 particular purpose. See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with 
-Social Monger. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
+Minimalist Social Icons. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
 */
 
 
-add_shortcode( 'socialmonger', 'socialmonger' );
+add_shortcode( 'mnmlsocial', 'mnmlsocial' );
 
 /***
 *
-* [socialmonger] shortcode.
+* [mnmlsocial] shortcode.
 * place one social link perline between opening and closing shorcode.
 * Links should start with protocol (probably https) but we will add them if you forget.
 *
@@ -46,13 +46,13 @@ add_shortcode( 'socialmonger', 'socialmonger' );
 **/
 
 
-function socialmonger( $a, $c ) {
+function mnmlsocial( $a, $c ) {
 	
 	// Check to see if this is the first shortcode
-	$idno = 1 + wp_cache_get( 'socialmonger_id' );
-	wp_cache_set('socialmonger_id', $idno );
+	$idno = 1 + wp_cache_get( 'mnmlsocial_id' );
+	wp_cache_set('mnmlsocial_id', $idno );
 	
-	$out = "<aside id='socialmonger-{$idno}' class='socialmonger'>";
+	$out = "<aside id='mnmlsocial-{$idno}' class='mnmlsocial'>";
 	
 	// initial style, only print once
 	if ( $idno === 1 ) {
@@ -68,27 +68,27 @@ function socialmonger( $a, $c ) {
 		
 		$out .= "
 		<style>
-		.socialmonger {padding: 0;$align}
-		.socialmonger a {text-decoration: none;}
-		.socialmonger > span {display: table-cell;vertical-align: middle; padding: {$padding};}
-		.socialmonger svg {display: block;width: {$size};height: {$size};fill: {$color};}
+		.mnmlsocial {padding: 0;$align}
+		.mnmlsocial a {text-decoration: none;}
+		.mnmlsocial > span {display: table-cell;vertical-align: middle; padding: {$padding};}
+		.mnmlsocial svg {display: block;width: {$size};height: {$size};fill: {$color};}
 		</style>";
 		
 	} elseif ( $a ) {// subsequent styles, for second instances on same page, only run if any attributes exist
 		
-		$out .= "<style>#socialmonger-{$idno} svg {";
+		$out .= "<style>#mnmlsocial-{$idno} svg {";
 		if ( !empty( $a['size'] ) )
 			$out .= "width: {$a['size']};height: {$a['size']};";
 		if ( !empty( $a['color'] ) )
 			$out .= "fill: {$a['color']};";
 		if ( !empty( $a['padding'] ) )
-			$out .= "} #socialmonger-{$idno} > span {padding: {$a['padding']};";
+			$out .= "} #mnmlsocial-{$idno} > span {padding: {$a['padding']};";
 		if ( !empty( $a['align'] ) ) {
 			if ( 'inline' === $a['align'] ) $align = "display: inline-table;";
 			elseif ( 'center' === $a['align'] ) $align = "display: table;margin-left: auto;margin-right: auto;";
 			elseif ( 'left' === $a['align'] ) $align = "display: table;margin-right: auto;";
 			elseif ( 'right' === $a['align'] ) $align = "display: table;margin-left: auto;";
-			$out .= "} #socialmonger-{$idno} {{$align}";
+			$out .= "} #mnmlsocial-{$idno} {{$align}";
 		}
 		$out .= "}</style>";
 	
