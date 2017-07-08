@@ -52,7 +52,7 @@ function mnmlsocial( $a, $c ) {
 	$idno = 1 + wp_cache_get( 'mnmlsocial_id' );
 	wp_cache_set('mnmlsocial_id', $idno );
 	
-	$out = "<aside id='mnmlsocial-{$idno}' class='mnmlsocial'>";
+	$out = "<nav id='mnmlsocial-{$idno}' class='mnmlsocial'>";
 	
 	// initial style, only print once
 	if ( $idno === 1 ) {
@@ -133,7 +133,7 @@ function mnmlsocial( $a, $c ) {
 			
 	}// foreach link
 	
-	$out .= "</aside>";
+	$out .= "</nav>";
 
 	return $out;
 }
