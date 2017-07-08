@@ -58,7 +58,7 @@ function mnmlsocial( $a, $c ) {
 	if ( $idno === 1 ) {
 		
 		$size = !empty( $a['size'] ) ? $a['size'] : "2rem";
-		$color = !empty( $a['color'] ) ? $a['color'] : "#777";
+		$color = !empty( $a['color'] ) ? $a['color'] : "currentColor";
 		$padding = !empty( $a['padding'] ) ? $a['padding'] : "0 1ex";
 		
 		if ( empty( $a['align'] ) || 'inline' === $a['align'] ) $align = "display: inline-table;";
@@ -69,9 +69,9 @@ function mnmlsocial( $a, $c ) {
 		$out .= "
 		<style>
 		.mnmlsocial {padding: 0;$align}
-		.mnmlsocial a {text-decoration: none;}
-		.mnmlsocial > span {display: table-cell;vertical-align: middle; padding: {$padding};}
-		.mnmlsocial svg {display: block;width: {$size};height: {$size};fill: {$color};}
+		.mnmlsocial-item > a {text-decoration:none;}
+		.mnmlsocial-item {display:table-cell;vertical-align:middle;padding:{$padding};}
+		.mnmlsocial svg {display:block;width:{$size};height:{$size};fill:{$color};}
 		</style>";
 		
 	} elseif ( $a ) {// subsequent styles, for second instances on same page, only run if any attributes exist
@@ -82,7 +82,7 @@ function mnmlsocial( $a, $c ) {
 		if ( !empty( $a['color'] ) )
 			$out .= "fill: {$a['color']};";
 		if ( !empty( $a['padding'] ) )
-			$out .= "} #mnmlsocial-{$idno} > span {padding: {$a['padding']};";
+			$out .= "} #mnmlsocial-{$idno} > .mnmlsocial-item {padding: {$a['padding']};";
 		if ( !empty( $a['align'] ) ) {
 			if ( 'inline' === $a['align'] ) $align = "display: inline-table;";
 			elseif ( 'center' === $a['align'] ) $align = "display: table;margin-left: auto;margin-right: auto;";
@@ -121,7 +121,7 @@ function mnmlsocial( $a, $c ) {
 				
 			if ( false !== stripos( $line, $site ) ) {
 				
-				$out .= "\n<span><a href='{$link}' rel='nofollow' target='_blank'>" . file_get_contents( "{$dir}{$site}.svg" ) . "</a></span>";
+				$out .= "\n<div class='mnmlsocial-item'><a href='{$link}' rel='nofollow' target='_blank'>" . file_get_contents( "{$dir}{$site}.svg" ) . "</a></div>";
 					
 				continue 2;// break out of this loop start at next line
 			}
