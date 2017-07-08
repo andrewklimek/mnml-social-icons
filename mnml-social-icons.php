@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Minimalist Social Icons
-Plugin URI:  https://github.com/andrewklimek/mnmlsocial/
-Description: crisp and light (official) social media icons (embeds SVG code for fast loading and vector rendering)
-Version:     1.3.1
+Plugin URI:  https://github.com/andrewklimek/mnml-social-icons
+Description: crisp and light (official) social media icons (embeds SVG code for fast loading and vector rendering) using [mnmlsocial] shortcode and simply pasting links, one per line, before the closing [/mnmlsocial]
+Version:     1.4.0
 Author:      Andrew J Klimek
-Author URI:  https://readycat.net
+Author URI:  https://andrewklimek.com
 License:     GPL2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
