@@ -116,9 +116,7 @@ function mnmlsocial( $a, $c ) {
 		$link = strip_tags( ( false === strpos( $line, '//' ) ) ? '//' . $line : $line );
 
 		foreach ( $sites as $site ) {
-				
-			poo($site);
-				
+			
 			if ( false !== stripos( $line, $site ) ) {
 				
 				$out .= "\n<div class='mnmlsocial-item'><a href='{$link}' rel='nofollow' target='_blank'>" . file_get_contents( "{$dir}{$site}.svg" ) . "</a></div>";
@@ -126,9 +124,7 @@ function mnmlsocial( $a, $c ) {
 				continue 2;// break out of this loop start at next line
 			}
 		}
-			
-		poo( "custom link");
-			
+		
 		$out .= $line;// this is for custom links entered directly as html.
 			
 	}// foreach link
