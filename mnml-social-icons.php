@@ -61,17 +61,17 @@ function mnmlsocial( $a, $c ) {
 		$color = !empty( $a['color'] ) ? $a['color'] : "currentColor";
 		$padding = !empty( $a['padding'] ) ? $a['padding'] : "0 1ex";
 		
-		if ( empty( $a['align'] ) || 'inline' === $a['align'] ) $align = "display: inline-table;";
-		elseif ( 'center' === $a['align'] ) $align = "display: table;margin-left: auto;margin-right: auto;";
-		elseif ( 'left' === $a['align'] ) $align = "display: table;margin-right: auto;";
-		elseif ( 'right' === $a['align'] ) $align = "display: table;margin-left: auto;";
+		if ( empty( $a['align'] ) || 'inline' === $a['align'] ) $align = "display:inline-table";
+		elseif ( 'center' === $a['align'] ) $align = "display:table;margin-left:auto;margin-right:auto";
+		elseif ( 'left' === $a['align'] ) $align = "display:table;margin-right:auto";
+		elseif ( 'right' === $a['align'] ) $align = "display:table;margin-left:auto";
 		
 		$out .= "
 		<style>
-		.mnmlsocial {padding: 0;$align}
-		.mnmlsocial-item > a {text-decoration:none;}
-		.mnmlsocial-item {display:table-cell;vertical-align:middle;padding:{$padding};}
-		.mnmlsocial svg {display:block;width:{$size};height:{$size};fill:{$color};}
+		.mnmlsocial{padding:0;$align}
+		.mnmlsocial-item > a{text-decoration:none}
+		.mnmlsocial-item{display:table-cell;vertical-align:middle;padding:{$padding}}
+		.mnmlsocial svg{display:block;max-width:100%;width:{$size};height:{$size};fill:{$color}}
 		</style>";
 		
 	} elseif ( $a ) {// subsequent styles, for second instances on same page, only run if any attributes exist
@@ -98,16 +98,16 @@ function mnmlsocial( $a, $c ) {
 	$lines = array_filter( explode( "\n", $c ) );
 	
 	$sites = array(		
-		'facebook',
-		'twitter',
-		'instagram',
-		'youtube',
-		'linkedin',
-		'pinterest',
-		'google',
-		'soundcloud',
-		'spotify',
-		'bandcamp',
+		'facebook' => 'Facebook',
+		'twitter' => 'Twitter',
+		'instagram' => 'Instagram',
+		'youtube' => 'YouTube',
+		'linkedin' => 'Linkedin',
+		'pinterest' => 'Pinterest',
+		'google' => 'Google Plus',
+		'soundcloud' => 'SoundCloud',
+		'spotify' => 'Spotify',
+		'bandcamp' => 'Bandcamp',
 	);
 	
 	foreach ( $lines as $line ) {
@@ -115,11 +115,11 @@ function mnmlsocial( $a, $c ) {
 		// check for scheme and add if missing. preserve original $line in case it's a custom html (else block at the end)
 		$link = strip_tags( ( false === strpos( $line, '//' ) ) ? '//' . $line : $line );
 
-		foreach ( $sites as $site ) {
+		foreach ( $sites as $site_url => $site_display ) {
 			
-			if ( false !== stripos( $line, $site ) ) {
+			if ( false !== stripos( $line, $site_url ) ) {
 				
-				$out .= "\n<div class='mnmlsocial-item'><a href='{$link}' rel='nofollow' target='_blank'>" . file_get_contents( "{$dir}{$site}.svg" ) . "</a></div>";
+				$out .= "\n<div class=mnmlsocial-item><a href='{$link}' rel=nofollow target=_blank title='{$site_display}'>" . file_get_contents( "{$dir}{$site_url}.svg" ) . "</a></div>";
 					
 				continue 2;// break out of this loop start at next line
 			}
