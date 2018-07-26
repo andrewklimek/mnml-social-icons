@@ -22,7 +22,27 @@ Minimalist Social Icons. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
 */
 
 
-add_shortcode( 'mnmlsocial', 'mnmlsocial' );
+// add_shortcode( 'mnmlsocial', 'mnmlsocial' );
+// Disabling the shortcode and sneaking it in before Embeds are processed
+// Certain URLs (soundcloud..) are converted into embeds and thus are no longer normal URLs during shortcode processing.
+// See https://github.com/WordPress/WordPress/blob/2361ca884f562e996fffd1ee373f29f75d41aff3/wp-includes/class-wp-embed.php#L32
+
+add_filter( 'the_content', 'mnmlsocial_custom_shortcode_parsing', 7 );// Run this early to avoid embed parsing (priority 8) and wpautop
+add_filter( 'widget_text_content', 'mnmlsocial_custom_shortcode_parsing', 7 );// also process text and HTML widgets
+	
+function mnmlsocial_custom_shortcode_parsing( $c ) {
+    	
+	$tag = "mnmlsocial";
+	
+	if ( false === strpos($c, '[' . $tag ) ) return $c;
+    
+	$c = preg_replace_callback(
+		"/\[{$tag}([^\]]*)\]((?:[^\[]*|\[(?!\/{$tag}\]))*)\[\/{$tag}\]/",
+		function($m){ return mnmlsocial( shortcode_parse_atts($m[1]), $m[2], $tag );},
+		$c );
+	
+    return $c;
+}
 
 /***
 *
@@ -44,6 +64,7 @@ add_shortcode( 'mnmlsocial', 'mnmlsocial' );
 * Each instance gets an incremental number in the ID so you can target for further customization
 *  
 **/
+
 
 
 function mnmlsocial( $a, $c ) {
