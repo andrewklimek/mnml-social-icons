@@ -3,7 +3,7 @@
 Plugin Name: Minimalist Social Icons
 Plugin URI:  https://github.com/andrewklimek/mnml-social-icons
 Description: crisp and light (official) social media icons (embeds SVG code for fast loading and vector rendering) using [mnmlsocial] shortcode and simply pasting links, one per line, before the closing [/mnmlsocial]
-Version:     1.4.0
+Version:     1.5.1
 Author:      Andrew J Klimek
 Author URI:  https://andrewklimek.com
 License:     GPL2
@@ -29,12 +29,10 @@ Minimalist Social Icons. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
 add_shortcode( 'mnmlsocial', 'mnmlsocial' );
 
 add_filter( 'the_content', 'mnmlsocial_custom_shortcode_parsing', 7 );// Run this early to avoid embed parsing (priority 8) and wpautop
-add_filter( 'widget_text_content', 'mnmlsocial_custom_shortcode_parsing', 7 );// also process text and HTML widgets
+add_filter( 'widget_text', 'mnmlsocial_custom_shortcode_parsing', 7 );// also process text and HTML widgets
 	
 function mnmlsocial_custom_shortcode_parsing( $c ) {
-    	
-		var_export($c);
-		
+    
 	$tag = "mnmlsocial";
 	
 	if ( false === strpos($c, '[' . $tag ) ) return $c;
@@ -61,6 +59,7 @@ function mnmlsocial_custom_shortcode_parsing( $c ) {
 * color - include the # or use rgba or whatever
 * padding - how much space around icons. default is 0 1ex (no padding above and below, 1ex left and right)
 * align - center, left, right, inline (default)
+* opacity - the CSS property. 0 - 1
 * 
 * if you leave any of these empty in a secondary instance, they will pull the attributes from the first shortcode on the page.
 *
@@ -84,6 +83,7 @@ function mnmlsocial( $a, $c ) {
 		$size = !empty( $a['size'] ) ? $a['size'] : "2rem";
 		$color = !empty( $a['color'] ) ? $a['color'] : "currentColor";
 		$padding = !empty( $a['padding'] ) ? $a['padding'] : "0 1ex";
+		$opacity = !empty( $a['opacity'] ) ? ";opacity:" . $a['opacity'] : "";
 		
 		if ( empty( $a['align'] ) || 'inline' === $a['align'] ) $align = "display:inline-table";
 		elseif ( 'center' === $a['align'] ) $align = "display:table;margin-left:auto;margin-right:auto";
@@ -92,10 +92,10 @@ function mnmlsocial( $a, $c ) {
 		
 		$out .= "
 		<style>
-		.mnmlsocial{padding:0;$align}
+		.mnmlsocial{padding:0;{$align}}
 		.mnmlsocial-item > a{text-decoration:none}
 		.mnmlsocial-item{display:table-cell;vertical-align:middle;padding:{$padding}}
-		.mnmlsocial svg{display:block;max-width:100%;width:{$size};height:{$size};fill:{$color}}
+		.mnmlsocial svg{display:block;max-width:100%;width:{$size};height:{$size};fill:{$color}{$opacity}}
 		</style>";
 		
 	} elseif ( $a ) {// subsequent styles, for second instances on same page, only run if any attributes exist
