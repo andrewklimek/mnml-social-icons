@@ -3,7 +3,7 @@
 Plugin Name: Minimalist Social Icons
 Plugin URI:  https://github.com/andrewklimek/mnml-social-icons
 Description: crisp and light (official) social media icons (embeds SVG code for fast loading and vector rendering) using [mnmlsocial] shortcode and simply pasting links, one per line, before the closing [/mnmlsocial]
-Version:     1.5.1
+Version:     1.5.2
 Author:      Andrew J Klimek
 Author URI:  https://andrewklimek.com
 License:     GPL2
@@ -94,6 +94,7 @@ function mnmlsocial( $a, $c ) {
 		<style>
 		.mnmlsocial{padding:0;{$align}}
 		.mnmlsocial-item > a{text-decoration:none}
+		.mnmlsocial-item:hover{opacity:0.7}
 		.mnmlsocial-item{display:table-cell;vertical-align:middle;padding:{$padding}}
 		.mnmlsocial svg{display:block;max-width:100%;width:{$size};height:{$size};fill:{$color}{$opacity}}
 		</style>";
