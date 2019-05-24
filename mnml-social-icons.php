@@ -138,7 +138,7 @@ function mnmlsocial( $a, $c ) {
 	foreach ( $lines as $line ) {
 		
 		// check for scheme and add if missing. preserve original $line in case it's a custom html (else block at the end)
-		$link = strip_tags( ( false === strpos( $line, '//' ) ) ? '//' . $line : $line );
+		$link = trim( strip_tags( ( false === strpos( $line, '//' ) ) ? '//' . $line : $line ) );
 
 		foreach ( $sites as $site_url => $site_display ) {
 			
