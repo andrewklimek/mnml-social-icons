@@ -94,7 +94,6 @@ function mnmlsocial( $a, $c ) {
 		<style>
 		.mnmlsocial{padding:0;{$align}}
 		.mnmlsocial-item > a{text-decoration:none}
-		.mnmlsocial-item:hover{opacity:0.7}
 		.mnmlsocial-item{display:table-cell;vertical-align:middle;padding:{$padding}}
 		.mnmlsocial svg{display:block;max-width:100%;width:{$size};height:{$size};fill:{$color}{$opacity}}
 		</style>";
