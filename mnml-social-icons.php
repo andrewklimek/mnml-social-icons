@@ -132,6 +132,7 @@ function mnmlsocial( $a, $c ) {
 		'soundcloud' => 'SoundCloud',
 		'spotify' => 'Spotify',
 		'bandcamp' => 'Bandcamp',
+		'apple' => 'Apple',
 	);
 	
 	foreach ( $lines as $line ) {
