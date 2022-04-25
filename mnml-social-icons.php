@@ -60,6 +60,7 @@ function mnmlsocial_custom_shortcode_parsing( $c ) {
 * padding - how much space around icons. default is 0 1ex (no padding above and below, 1ex left and right)
 * align - center, left, right, inline (default)
 * opacity - the CSS property. 0 - 1
+* show - svg, text, both (default svg)
 * 
 * if you leave any of these empty in a secondary instance, they will pull the attributes from the first shortcode on the page.
 *
@@ -143,8 +144,12 @@ function mnmlsocial( $a, $c ) {
 		foreach ( $sites as $site_url => $site_display ) {
 			
 			if ( false !== stripos( $line, $site_url ) ) {
+			    
+			    if ( empty($a['show']) || "svg" === $a['show'] ) $show = file_get_contents( "{$dir}{$site_url}.svg" );
+    			elseif ( "both" === $a['show'] ) $show = file_get_contents( "{$dir}{$site_url}.svg" ) . " " . $site_display;
+    			elseif ( "text" === $a['show'] ) $show = $site_display;
 				
-				$out .= "\n<div class=mnmlsocial-item><a href='{$link}' rel=nofollow target=_blank title='{$site_display}'>" . file_get_contents( "{$dir}{$site_url}.svg" ) . "</a></div>";
+				$out .= "\n<div class=mnmlsocial-item><a href='{$link}' rel=nofollow target=_blank title='{$site_display}'>" . $show . "</a></div>";
 					
 				continue 2;// break out of this loop start at next line
 			}
