@@ -3,7 +3,7 @@
 Plugin Name: Minimalist Social Icons
 Plugin URI:  https://github.com/andrewklimek/mnml-social-icons
 Description: crisp and light (official) social media icons (embeds SVG code for fast loading and vector rendering) using [mnmlsocial] shortcode and simply pasting links, one per line, before the closing [/mnmlsocial]
-Version:     1.5.2
+Version:     1.5.3
 Author:      Andrew J Klimek
 Author URI:  https://andrewklimek.com
 License:     GPL2
@@ -137,7 +137,7 @@ function mnmlsocial( $a, $c ) {
 	
 	foreach ( $lines as $line ) {
 		
-		// check for scheme and add if missing. preserve original $line in case it's a custom html (else block at the end)
+		// check for scheme and add if missing. preserve original $line in case it's a custom html
 		$link = trim( strip_tags( ( false === strpos( $line, '//' ) ) ? '//' . $line : $line ) );
 
 		foreach ( $sites as $site_url => $site_display ) {
@@ -150,7 +150,14 @@ function mnmlsocial( $a, $c ) {
 			}
 		}
 		
-		$out .= $line;// this is for custom links entered directly as html.
+		// custom links
+		if ( stripos( $line, '</a>' ) ) {// custom links entered directly as html
+		    $out .= "\n<div class=mnmlsocial-item>{$line}</div>";
+		} else {
+		    // plaintext links
+		    $label = explode( '/', explode('//', $link)[1] )[0];
+            $out .= "\n<div class=mnmlsocial-item><a href='{$link}' rel=nofollow target=_blank title='{$label}'>{$label}</a></div>";
+		}
 			
 	}// foreach link
 	
