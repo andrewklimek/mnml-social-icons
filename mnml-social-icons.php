@@ -3,7 +3,7 @@
 Plugin Name: Minimalist Social Icons
 Plugin URI:  https://github.com/andrewklimek/mnml-social-icons
 Description: crisp and light (official) social media icons (embeds SVG code for fast loading and vector rendering) using [mnmlsocial] shortcode and simply pasting links, one per line, before the closing [/mnmlsocial]
-Version:     1.5.3
+Version:     1.5.4
 Author:      Andrew J Klimek
 Author URI:  https://andrewklimek.com
 License:     GPL2
@@ -96,9 +96,10 @@ function mnmlsocial( $a, $c ) {
 		.mnmlsocial{padding:0;{$align}}
 		.mnmlsocial-item > a{text-decoration:none}
 		.mnmlsocial-item{display:table-cell;vertical-align:middle;padding:{$padding}}
-		.mnmlsocial svg{display:block;max-width:100%;width:{$size};height:{$size};fill:{$color}{$opacity}}
+		.mnmlsocial svg{display:block;width:{$size};height:{$size};fill:{$color}{$opacity}}
 		</style>";
-		
+		// removed max-width:100%; from svg because it was shrinking them in flex layouts.
+
 	} elseif ( $a ) {// subsequent styles, for second instances on same page, only run if any attributes exist
 		
 		$out .= "<style>#mnmlsocial-{$idno} svg {";
@@ -120,7 +121,7 @@ function mnmlsocial( $a, $c ) {
 	}
 	
 	$dir = __DIR__ . '/svgs/';
-	$lines = array_filter( explode( "\n", $c ) );
+	$lines = explode( "\n", $c );
 	
 	$sites = array(		
 		'facebook' => 'Facebook',
@@ -135,11 +136,15 @@ function mnmlsocial( $a, $c ) {
 		'bandcamp' => 'Bandcamp',
 		'apple' => 'Apple',
 	);
-	
+
 	foreach ( $lines as $line ) {
+
+		$line =  trim( $line );
+
+		if ( ! $line ) continue;
 		
 		// check for scheme and add if missing. preserve original $line in case it's a custom html
-		$link = trim( strip_tags( ( false === strpos( $line, '//' ) ) ? '//' . $line : $line ) );
+		$link = strip_tags( ( false === strpos( $line, '//' ) ) ? '//' . $line : $line );
 
 		foreach ( $sites as $site_url => $site_display ) {
 			
