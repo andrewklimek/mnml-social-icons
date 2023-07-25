@@ -57,7 +57,7 @@ function mnmlsocial_custom_shortcode_parsing( $c ) {
 *
 * size - include units (refault is 2rem)
 * color - include the # or use rgba or whatever
-* gap - how much space between (default is $size)
+* gap - how much space between (default is 1ex)
 * align - center, left, right, inline (default)
 * opacity - the CSS property. 0 - 1
 * show - svg, text, both (default svg)
@@ -83,7 +83,7 @@ function mnmlsocial( $a, $c ) {
 		
 		$size = !empty( $a['size'] ) ? $a['size'] : "2rem";
 		$color = !empty( $a['color'] ) ? $a['color'] : "currentColor";
-		$gap = !empty( $a['gap'] ) ? $a['gap'] : $size;
+		$gap = !empty( $a['gap'] ) ? $a['gap'] : "1ex";
 		$opacity = !empty( $a['opacity'] ) ? ";opacity:" . $a['opacity'] : "";
 		
 		if ( empty( $a['align'] ) || 'inline' === $a['align'] ) $align = "display:inline-flex";
