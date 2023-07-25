@@ -3,7 +3,7 @@
 Plugin Name: Minimalist Social Icons
 Plugin URI:  https://github.com/andrewklimek/mnml-social-icons
 Description: crisp and light (official) social media icons (embeds SVG code for fast loading and vector rendering) using [mnmlsocial] shortcode and simply pasting links, one per line, before the closing [/mnmlsocial]
-Version:     1.5.4
+Version:     1.6
 Author:      Andrew J Klimek
 Author URI:  https://andrewklimek.com
 License:     GPL2
@@ -55,9 +55,9 @@ function mnmlsocial_custom_shortcode_parsing( $c ) {
 *
 * Shortcode options:
 *
-* size - include units (refault is 2em)
+* size - include units (refault is 2rem)
 * color - include the # or use rgba or whatever
-* padding - how much space around icons. default is 0 1ex (no padding above and below, 1ex left and right)
+* gap - how much space between (default is $size)
 * align - center, left, right, inline (default)
 * opacity - the CSS property. 0 - 1
 * show - svg, text, both (default svg)
@@ -83,19 +83,18 @@ function mnmlsocial( $a, $c ) {
 		
 		$size = !empty( $a['size'] ) ? $a['size'] : "2rem";
 		$color = !empty( $a['color'] ) ? $a['color'] : "currentColor";
-		$padding = !empty( $a['padding'] ) ? $a['padding'] : "0 1ex";
+		$gap = !empty( $a['gap'] ) ? $a['gap'] : $size;
 		$opacity = !empty( $a['opacity'] ) ? ";opacity:" . $a['opacity'] : "";
 		
-		if ( empty( $a['align'] ) || 'inline' === $a['align'] ) $align = "display:inline-table";
-		elseif ( 'center' === $a['align'] ) $align = "display:table;margin-left:auto;margin-right:auto";
-		elseif ( 'left' === $a['align'] ) $align = "display:table;margin-right:auto";
-		elseif ( 'right' === $a['align'] ) $align = "display:table;margin-left:auto";
+		if ( empty( $a['align'] ) || 'inline' === $a['align'] ) $align = "display:inline-flex";
+		elseif ( 'center' === $a['align'] ) $align = "display:flex;justify-content:center";
+		elseif ( 'left' === $a['align'] ) $align = "display:flex";// ;justify-content:flex-start
+		elseif ( 'right' === $a['align'] ) $align = "display:flex;justify-content:flex-end";
 		
 		$out .= "
 		<style>
-		.mnmlsocial{padding:0;{$align}}
+		.mnmlsocial{padding:0;align-items:center;gap:{$gap};{$align}}
 		.mnmlsocial-item > a{text-decoration:none}
-		.mnmlsocial-item{display:table-cell;vertical-align:middle;padding:{$padding}}
 		.mnmlsocial svg{display:block;width:{$size};height:{$size};fill:{$color}{$opacity}}
 		</style>";
 		// removed max-width:100%; from svg because it was shrinking them in flex layouts.
