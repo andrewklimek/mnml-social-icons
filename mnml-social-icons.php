@@ -72,14 +72,14 @@ function mnmlsocial_custom_shortcode_parsing( $c ) {
 
 function mnmlsocial( $a, $c ) {
 	
-	// Check to see if this is the first shortcode
-	$idno = 1 + wp_cache_get( 'mnmlsocial_id' );
-	wp_cache_set('mnmlsocial_id', $idno );
+	global $mnmlsocial_id;
+	// Check to see if this is the first shortcode.  set or increment
+	$mnmlsocial_id = empty( $mnmlsocial_id ) ? 1 : ( 1 + $mnmlsocial_id );
 	
-	$out = "<nav id='mnmlsocial-{$idno}' class='mnmlsocial'>";
+	$out = "<nav id='mnmlsocial-{$mnmlsocial_id}' class='mnmlsocial'>";
 	
 	// initial style, only print once
-	if ( $idno === 1 ) {
+	if ( $mnmlsocial_id === 1 ) {
 		
 		$size = !empty( $a['size'] ) ? $a['size'] : "2rem";
 		$color = !empty( $a['color'] ) ? $a['color'] : "currentColor";
@@ -101,19 +101,19 @@ function mnmlsocial( $a, $c ) {
 
 	} elseif ( $a ) {// subsequent styles, for second instances on same page, only run if any attributes exist
 		
-		$out .= "<style>#mnmlsocial-{$idno} svg {";
+		$out .= "<style>#mnmlsocial-{$mnmlsocial_id} svg {";
 		if ( !empty( $a['size'] ) )
 			$out .= "width: {$a['size']};height: {$a['size']};";
 		if ( !empty( $a['color'] ) )
 			$out .= "fill: {$a['color']};";
 		if ( !empty( $a['padding'] ) )
-			$out .= "} #mnmlsocial-{$idno} > .mnmlsocial-item {padding: {$a['padding']};";
+			$out .= "} #mnmlsocial-{$mnmlsocial_id} > .mnmlsocial-item {padding: {$a['padding']};";
 		if ( !empty( $a['align'] ) ) {
 			if ( 'inline' === $a['align'] ) $align = "display: inline-table;";
 			elseif ( 'center' === $a['align'] ) $align = "display: table;margin-left: auto;margin-right: auto;";
 			elseif ( 'left' === $a['align'] ) $align = "display: table;margin-right: auto;";
 			elseif ( 'right' === $a['align'] ) $align = "display: table;margin-left: auto;";
-			$out .= "} #mnmlsocial-{$idno} {{$align}";
+			$out .= "} #mnmlsocial-{$mnmlsocial_id} {{$align}";
 		}
 		$out .= "}</style>";
 	
